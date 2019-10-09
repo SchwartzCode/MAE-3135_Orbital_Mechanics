@@ -2,12 +2,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import axes3d, Axes3D
 
-from astropy import units as u
-
-from poliastro.bodies import Earth, Mars, Sun
-from poliastro.twobody import Orbit
-from poliastro.plotting import *
-
 
 mu = 398600 #[km^3/s^2]
 I_vec = np.array([1.0, 0.0, 0.0])
@@ -75,7 +69,7 @@ def orbital_elements_to_state(a, e, i, big_omega, small_omega, true_anom):
     print("velocity = ", v)
     print("h \t = ", h_norm*h_mag, "\n")
 
-def plot_3d_orbit_pyplot(a, e, i, big_omega, small_omega, true_anom, h_mag):
+def plot_3d_orbit(a, e, i, big_omega, small_omega, true_anom, h_mag):
     EARTH_RAD = 6378
     fig = plt.figure()
     ax = Axes3D(fig)
@@ -99,27 +93,15 @@ def plot_3d_orbit_pyplot(a, e, i, big_omega, small_omega, true_anom, h_mag):
     y = EARTH_RAD*np.sin(u)*np.sin(v)
     z = EARTH_RAD*np.cos(v)
     #ax.plot3D(orbit_states[:,0], orbit_states[:,1], orbit_states[:,2], color='purple')
-    ax.plot_wireframe(x, y, z, label='Earth', color='r', zorder=0.3)
+    #ax.plot_wireframe(x, y, z, label='Earth', color='r', zorder=0.3)
     #ax.plot_surface(x, y, z, rstride=1, cstride=1, cmap='winter', edgecolor='none')
-    ax.plot3D(orbit_states[:,0], orbit_states[:,1], orbit_states[:,2], 'purple', zorder=0.5)
+    ax.plot3D(orbit_states[:,0], orbit_states[:,1], orbit_states[:,2], 'purple')
+    ax.scatter([0], [0], [0], color="g", s=EARTH_RAD)
 
     #plt.legend()
 
     plt.grid()
     plt.show()
-
-def plot_orbit_poliastro(a, e, i, big_omega, small_omega, true_anom):
-    a = a * u.AU
-    ecc = e * u.one
-    inc = i * u.deg
-    raan = big_omega * u.deg
-    argp = small_omega * u.deg
-    nu = small_omega * u.deg
-
-    ss = Orbit.from_classical(Sun, a, ecc, inc, raan, argp, nu)
-
-    frame = OrbitPlotter3D()
-    frame.plot(ss)
 
 
 
@@ -128,8 +110,6 @@ velocity = np.array([1.727, 3.893, -5.883]) #[km/sec]
 a, b, c, d, e, f, g = state_to_orbital_elements(position, velocity)
 orbital_elements_to_state(a, b, c, d, e, f)
 
-plot_3d_orbit_pyplot(a, b, c, d, e, f, g)
-
-#plot_orbit_poliastro(a, b, c, d, e, f)
+plot_3d_orbit(a, b, c, d, e, f, g)
 
 #plot in pyplot and find where orbit intersects with planet projection
