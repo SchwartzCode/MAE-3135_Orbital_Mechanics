@@ -29,7 +29,7 @@ def state_to_orbital_elements(pos, vel):
   a = -mu / (2*specific_energy)
 
 
-  print("ORBITAL ELEMENTS FROM STATE:")
+  print("Q2: ORBITAL ELEMENTS FROM STATE:")
   print("Pos = ", pos,   "Vel = ", vel)
   print("=============================")
   print("a \t=", a)
@@ -38,7 +38,7 @@ def state_to_orbital_elements(pos, vel):
   print("Omega \t=", big_omega)
   print("w \t=", small_omega)
   print("nu \t=", true_anomaly) #true anomaly
-  print("h \t=", h, "\n") #specific angular momentum
+  print("h \t=", h, "\n\n") #specific angular momentum
 
 
   return a, e, i, big_omega, small_omega, true_anomaly, h_mag
@@ -60,7 +60,7 @@ def orbital_elements_to_state(a, e, i, big_omega, small_omega, true_anom):
     r = r_mag*radial_vec
     v = mu/h_mag * ( (1+e*np.cos(true_anom))*perp_vec + e*np.sin(true_anom) * radial_vec )
 
-    print("STATE VECTORS FROM ORBITAL ELEMENTS:")
+    print("Q3: STATE VECTORS FROM ORBITAL ELEMENTS:")
     print("a = ", a, "  e = ", e, "  i = ", i)
     print("small omega = ", small_omega, "  big omega = ", big_omega)
     print("true anomaly = ", true_anom)
@@ -110,6 +110,6 @@ velocity = np.array([1.727, 3.893, -5.883]) #[km/sec]
 a, b, c, d, e, f, g = state_to_orbital_elements(position, velocity)
 orbital_elements_to_state(a, b, c, d, e, f)
 
-plot_3d_orbit(a, b, c, d, e, f, g)
+#plot_3d_orbit(a, b, c, d, e, f, g)
 
 #plot in pyplot and find where orbit intersects with planet projection
